@@ -9,8 +9,6 @@ import {
   CardHeader,
   CardTitle
 } from '@/components/ui/card';
-import { User } from '@supabase/supabase-js';
-import { createClient } from '@/utils/supabase/client';
 import { Check } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -87,41 +85,7 @@ const pricingList: PricingProps[] = [
 export const Pricing = () => {
   const { toast } = useToast();
   const router = useRouter();
-  const supabase = createClient();
   const [loading, setLoading] = useState<boolean>(false);
-  const handleClick = async (price: PricingProps) => {
-    if (price.redirectURL) {
-      return router.push(price.redirectURL);
-    }
-    setLoading(true);
-
-    const { data, error } = await supabase.functions.invoke('get_stripe_url', {
-      body: {
-        return_url: getURL('/#pricing'),
-        price: price.id
-      }
-    });
-    if (error) {
-      setLoading(false);
-      return toast({
-        title: 'Error Occured',
-        description: error.message,
-        variant: 'destructive'
-      });
-    }
-    const redirectUrl = data?.redirect_url;
-    if (!redirectUrl) {
-      setLoading(false);
-      return toast({
-        title: 'An unknown error occurred.',
-        description:
-          'Please try again later or contact a system administrator.',
-        variant: 'destructive'
-      });
-    }
-    router.push(redirectUrl);
-    setLoading(false);
-  };
   return (
     <section id="pricing" className="container py-24 sm:py-32">
       <h2 className="text-3xl md:text-4xl font-bold text-center">
@@ -164,11 +128,7 @@ export const Pricing = () => {
             </CardHeader>
 
             <CardContent>
-              <Button
-                className="w-full"
-                onClick={() => handleClick(pricing)}
-                disabled={loading}
-              >
+              <Button className="w-full" disabled={loading}>
                 {pricing.buttonText}
               </Button>
             </CardContent>

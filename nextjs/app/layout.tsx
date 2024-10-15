@@ -4,14 +4,10 @@ import { getURL } from '@/utils/helpers';
 import '@/styles/main.css';
 import { PHProvider } from './providers';
 import { ThemeProvider } from '@/components/landing/theme-provider';
-import dynamic from 'next/dynamic';
 import { Toaster } from '@/components/ui/toaster';
 import { Navbar } from '@/components/landing/Navbar';
 import { Footer } from '@/components/landing/Footer';
 import { ScrollToTop } from '@/components/landing/ScrollToTop';
-const PostHogPageView = dynamic(() => import('./PostHogPageView'), {
-  ssr: false
-});
 
 const meta = {
   title: 'AIMS Financial Group',
@@ -28,10 +24,10 @@ export async function generateMetadata(): Promise<Metadata> {
     title: meta.title,
     description: meta.description,
     referrer: 'origin-when-cross-origin',
-    keywords: ['Vercel', 'Supabase', 'Next.js', 'Stripe', 'Subscription'],
-    authors: [{ name: 'Vercel', url: 'https://vercel.com/' }],
-    creator: 'Vercel',
-    publisher: 'Vercel',
+    keywords: ['AIMS'],
+    authors: [{ name: 'AIMS', url: 'https://vercel.com/' }],
+    creator: 'AIMS',
+    publisher: 'AIMS',
     robots: meta.robots,
     icons: { icon: meta.favicon },
     metadataBase: new URL(meta.url),
@@ -60,7 +56,6 @@ export default async function RootLayout({ children }: PropsWithChildren) {
       <ThemeProvider>
         <PHProvider>
           <body>
-            <PostHogPageView />
             <Navbar />
             <main
               id="skip"

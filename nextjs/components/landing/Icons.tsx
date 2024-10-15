@@ -19,7 +19,7 @@ export const LogoTextIcon = () => {
     theme === 'dark' || theme !== 'light'
       ? '/landing/aimstext_white_transparent.png'
       : '/landing/aimstext.png';
-  if (theme === 'system') {
+  if (theme === 'system' && typeof window !== 'undefined') {
     const systemTheme = window.matchMedia('(prefers-color-scheme: dark)')
       .matches
       ? 'dark'
